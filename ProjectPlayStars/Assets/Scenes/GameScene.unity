@@ -270,13 +270,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42b53a97d2e876a4ab8b1e7892772671, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GridWidth: 50
-  GridHeight: 50
-  StarAmount: 30
+  GridWidth: 90
+  GridHeight: 55
+  StarAmount: 100
   Star: {fileID: 6255107446420873703, guid: da450afd9fa61f24e8502d030689250e, type: 3}
   StarFolder: {fileID: 4201730766358554562}
   StarScaleMin: 0.1
   StarScaleMax: 1
+  StarSystemPrefabs:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  StarSystemPrefabsNames:
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
 --- !u!4 &478221808
 Transform:
   m_ObjectHideFlags: 0

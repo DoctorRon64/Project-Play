@@ -14,7 +14,11 @@ public class StarGeneratorManager : MonoBehaviour
 	[SerializeField] private float StarScaleMin;
 	[SerializeField] private float StarScaleMax;
 
-	private List<GameObject> prefabStars = new List<GameObject>();
+	[SerializeField] private List<GameObject> StarSystemPrefabs = new List<GameObject>();
+	[SerializeField] private List<string> StarSystemPrefabsNames = new List<string>();
+	private List<GameObject> StarList = new List<GameObject>();
+
+	private Dictionary<string, List<GameObject>> StarSystems = new Dictionary<string, List<GameObject>>();
 
 	private void Awake()
 	{
@@ -26,9 +30,10 @@ public class StarGeneratorManager : MonoBehaviour
 	{
 		ClearStarsInGrid();
 
+
 		for (int i = 0; i < StarAmount; i++)
 		{
-			GenerateStarInGrid(Star, prefabStars);
+			GenerateStarInGrid(Star, StarList);
 		}
 	}
 
@@ -36,21 +41,32 @@ public class StarGeneratorManager : MonoBehaviour
 	{
 		Vector2 _positon = new Vector2(Random.Range(-GridWidth, GridWidth), Random.Range(-GridHeight, GridHeight));
 		GameObject _InstantiateObject = Instantiate(_PrefabObj, _positon, Quaternion.identity, StarFolder.transform);
-		_InstantiateObject.transform.localScale = new Vector3(Random.Range(StarScaleMin, StarScaleMax), Random.Range(StarScaleMin, StarScaleMax), 1f);
+		float _randomScale = Random.Range(StarScaleMin, StarScaleMax);
+		_InstantiateObject.transform.localScale = new Vector3(_randomScale, _randomScale, 1f);
 		_list.Add(_InstantiateObject);
 	}
 
 	[ContextMenu("Clear")]
 	private void ClearStarsInGrid()
 	{
-		if (prefabStars.Count <= 0) { return; }
-
-		Debug.Log("clear");
-
-		for (int i = 0; i < StarAmount; i++)
+		for (int i = StarList.Count - 1; i >= 0; i--)
 		{ 
-			DestroyImmediate(prefabStars[i]);
+			DestroyImmediate(StarList[i]);
 		}
-		prefabStars.Clear();
+
+		for (int i = 0; i < StarList.Count; i++)
+		{
+			Destroy(StarList[i]);
+		}
+
+		StarList.Clear();
+	}
+
+	private void SetStarSystem()
+	{
+		for (int i = 0; i < 12; i++)
+		{
+			StarSystems.Add(StarSystemPrefabsNames[i], StarSystemPrefabs[i]);
+		}
 	}
 }
