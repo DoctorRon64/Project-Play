@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class StarGeneratorManager : MonoBehaviour
 {
@@ -15,10 +16,9 @@ public class StarGeneratorManager : MonoBehaviour
 	[SerializeField] private float StarScaleMax;
 
 	[SerializeField] private List<GameObject> StarSystemPrefabs = new List<GameObject>();
-	[SerializeField] private List<string> StarSystemPrefabsNames = new List<string>();
-	private List<GameObject> StarList = new List<GameObject>();
 
-	private Dictionary<string, List<GameObject>> StarSystems = new Dictionary<string, List<GameObject>>();
+	private List<GameObject> StarList = new List<GameObject>();
+	private Dictionary<string, GameObject> StarSystems = new Dictionary<string, GameObject>();
 
 	private void Awake()
 	{
@@ -29,7 +29,7 @@ public class StarGeneratorManager : MonoBehaviour
 	private void GenerateGrid()
 	{
 		ClearStarsInGrid();
-
+		GenerateStarSystemInGrid(StarSystemPrefabs[Random.Range(0, StarSystemPrefabs.Count)]);
 
 		for (int i = 0; i < StarAmount; i++)
 		{
@@ -42,8 +42,30 @@ public class StarGeneratorManager : MonoBehaviour
 		Vector2 _positon = new Vector2(Random.Range(-GridWidth, GridWidth), Random.Range(-GridHeight, GridHeight));
 		GameObject _InstantiateObject = Instantiate(_PrefabObj, _positon, Quaternion.identity, StarFolder.transform);
 		float _randomScale = Random.Range(StarScaleMin, StarScaleMax);
-		_InstantiateObject.transform.localScale = new Vector3(_randomScale, _randomScale, 1f);
+		if (_randomScale >= (StarScaleMax / 2)) { _randomScale = Random.Range(StarScaleMin, StarScaleMax); }
+		_InstantiateObject.GetComponent<Light2D>().pointLightOuterRadius = _randomScale;
 		_list.Add(_InstantiateObject);
+	}
+
+	private void GenerateStarSystemInGrid(GameObject _PrefabObj)
+	{
+		Vector2 _position = new Vector2(Random.Range(-GridWidth, GridWidth), Random.Range(-GridHeight, GridHeight));
+		GameObject _InstantiateObject = Instantiate(_PrefabObj, _position, Quaternion.identity, StarFolder.transform);
+		StarSystems.Add(_PrefabObj.name, _PrefabObj);
+
+		StarSystem _system = _InstantiateObject.GetComponent<StarSystem>();
+
+		for (int i = 0; i < _system.Stars.Count; i++)
+		{
+			float _PosX = Mathf.Round(_system.Stars[i].x * 10000f) / 100000f;
+			float _PosY = Mathf.Round(_system.Stars[i].y * 10000f) / 100000f;
+
+			_system.Stars[i] = new Vector2(_PosX, _PosY);
+			GameObject _StarInstantiateObject = Instantiate(Star, new Vector3(_PosX, _PosY, 0f), Quaternion.identity);
+
+			_StarInstantiateObject.transform.parent = _InstantiateObject.transform;
+			StarList.Add(_StarInstantiateObject);
+		}
 	}
 
 	[ContextMenu("Clear")]
@@ -59,14 +81,8 @@ public class StarGeneratorManager : MonoBehaviour
 			Destroy(StarList[i]);
 		}
 
+		DestroyImmediate(FindObjectOfType<StarSystem>());
+		StarSystems.Clear();
 		StarList.Clear();
-	}
-
-	private void SetStarSystem()
-	{
-		for (int i = 0; i < 12; i++)
-		{
-			StarSystems.Add(StarSystemPrefabsNames[i], StarSystemPrefabs[i]);
-		}
 	}
 }

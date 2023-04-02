@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class StarSystem : MonoBehaviour
 {
-	public List<Transform> Stars;
+	public List<Vector2> Stars;
 }
