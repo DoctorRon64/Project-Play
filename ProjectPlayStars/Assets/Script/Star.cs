@@ -29,6 +29,8 @@ public class Star : MonoBehaviour
 		}
 	}
 
+
+
 	[ContextMenu("ParentPos")]
 	public void SetPositioinToParent()
 	{

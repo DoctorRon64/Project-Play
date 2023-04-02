@@ -5,6 +5,7 @@ using UnityEngine.Rendering.Universal;
 
 public class StarGeneratorManager : MonoBehaviour
 {
+	//settings
     [SerializeField] private int GridWidth;
     [SerializeField] private int GridHeight;
     [SerializeField] private int StarAmount;
@@ -17,8 +18,12 @@ public class StarGeneratorManager : MonoBehaviour
 
 	[SerializeField] private List<GameObject> StarSystemPrefabs = new List<GameObject>();
 
-	private List<GameObject> StarList = new List<GameObject>();
-	private Dictionary<string, GameObject> StarSystems = new Dictionary<string, GameObject>();
+	//=================================================================
+
+	//in scene
+	public List<GameObject> StarList = new List<GameObject>();
+	public GameObject StarSystemInScene;
+	public Dictionary<string, GameObject> StarSystems = new Dictionary<string, GameObject>();
 
 	private void Awake()
 	{
@@ -50,20 +55,21 @@ public class StarGeneratorManager : MonoBehaviour
 	private void GenerateStarSystemInGrid(GameObject _PrefabObj)
 	{
 		Vector2 _position = new Vector2(Random.Range(-GridWidth, GridWidth), Random.Range(-GridHeight, GridHeight));
-		GameObject _InstantiateObject = Instantiate(_PrefabObj, _position, Quaternion.identity, StarFolder.transform);
+		StarSystemInScene = Instantiate(_PrefabObj, _position, Quaternion.identity, StarFolder.transform);
 		StarSystems.Add(_PrefabObj.name, _PrefabObj);
 
-		StarSystem _system = _InstantiateObject.GetComponent<StarSystem>();
+		StarSystem _system = StarSystemInScene.GetComponent<StarSystem>();
 
 		for (int i = 0; i < _system.Stars.Count; i++)
 		{
-			float _PosX = Mathf.Round(_system.Stars[i].x * 10000f) / 100000f;
-			float _PosY = Mathf.Round(_system.Stars[i].y * 10000f) / 100000f;
+			GameObject _StarInstantiateObject = Instantiate(Star, new Vector3(_system.Stars[i].x + StarSystemInScene.transform.position.x, _system.Stars[i].y + StarSystemInScene.transform.position.y, 0f), Quaternion.identity, StarSystemInScene.transform);
+			
+			float _randomScale = Random.Range(StarScaleMin, StarScaleMax);
+			if (_randomScale >= (StarScaleMax / 2)) { _randomScale = Random.Range(StarScaleMin, StarScaleMax); }
 
-			_system.Stars[i] = new Vector2(_PosX, _PosY);
-			GameObject _StarInstantiateObject = Instantiate(Star, new Vector3(_PosX, _PosY, 0f), Quaternion.identity);
+			_StarInstantiateObject.GetComponent<CircleCollider2D>().radius = 0.1f;
+			_StarInstantiateObject.GetComponent<Light2D>().pointLightOuterRadius = _randomScale;
 
-			_StarInstantiateObject.transform.parent = _InstantiateObject.transform;
 			StarList.Add(_StarInstantiateObject);
 		}
 	}
