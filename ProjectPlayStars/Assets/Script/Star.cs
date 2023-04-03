@@ -17,7 +17,7 @@ public class Star : MonoBehaviour
 	{
 		if (collision.CompareTag("Flash"))
 		{
-			StarObject.enabled = true;
+			StarObject.enabled = false;
 		}
 	}
 
@@ -34,4 +34,6 @@ public class Star : MonoBehaviour
 	{
 		gameObject.transform.position = gameObject.transform.parent.position;
 	}
+
+
 }
