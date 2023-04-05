@@ -49,6 +49,7 @@ public class StarGeneratorManager : MonoBehaviour
 		float _randomScale = Random.Range(StarScaleMin, StarScaleMax);
 		if (_randomScale >= (StarScaleMax / 2)) { _randomScale = Random.Range(StarScaleMin, StarScaleMax); }
 		_InstantiateObject.GetComponent<Light2D>().pointLightOuterRadius = _randomScale;
+		_InstantiateObject.GetComponentInChildren<SpriteRenderer>().transform.localScale = new Vector3(_randomScale / 25, _randomScale / 25, 0f);
 		_list.Add(_InstantiateObject);
 	}
 
@@ -62,13 +63,15 @@ public class StarGeneratorManager : MonoBehaviour
 
 		for (int i = 0; i < _system.Stars.Count; i++)
 		{
-			GameObject _StarInstantiateObject = Instantiate(Star, new Vector3(_system.Stars[i].x + StarSystemInScene.transform.position.x, _system.Stars[i].y + StarSystemInScene.transform.position.y, 0f), Quaternion.identity, StarSystemInScene.transform);
-			
+			GameObject _StarInstantiateObject = Instantiate(Star, new Vector3(_system.Stars[i].x + StarSystemInScene.transform.position.x, _system.Stars[i].y + StarSystemInScene.transform.position.y, 0f), Quaternion.identity);
+			_StarInstantiateObject.transform.parent = StarSystemInScene.transform;
+
 			float _randomScale = Random.Range(StarScaleMin, StarScaleMax);
 			if (_randomScale >= (StarScaleMax / 2)) { _randomScale = Random.Range(StarScaleMin, StarScaleMax); }
 
 			_StarInstantiateObject.GetComponent<CircleCollider2D>().radius = 0.1f;
 			_StarInstantiateObject.GetComponent<Light2D>().pointLightOuterRadius = _randomScale;
+			_StarInstantiateObject.GetComponentInChildren<SpriteRenderer>().transform.localScale = new Vector3(_randomScale / 25, _randomScale / 25, 0f);
 
 			StarList.Add(_StarInstantiateObject);
 		}

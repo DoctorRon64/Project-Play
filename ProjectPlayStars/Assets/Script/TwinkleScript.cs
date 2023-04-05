@@ -6,43 +6,63 @@ using UnityEngine.UIElements;
 
 public class TwinkleScript : MonoBehaviour
 {
-	private GameObject pictureObject;
+    private SpriteRenderer sprtRndr;
+    private Light2D parentLight;
+    private bool isRotating = false;
 
-    public bool rotateX = true;
-    private float rotationSpeed;
-    public float ScaleSign;
-    private float rotz;
-
-    private void Awake()
+	private void Awake()
 	{
-		pictureObject = GetComponentInChildren<SpriteRenderer>().gameObject;
+		sprtRndr = GetComponent<SpriteRenderer>();
+        parentLight = gameObject.transform.parent.GetComponent<Light2D>();
+        parentLight.intensity = 7f;
+        SetOpacity(0f);
     }
 
-    private void Update()
+	private void Update()
     {
         Twinkle();
     }
 
     private void Twinkle()
-	{
-        if (rotateX == true)
+    {
+        int randomValue = Random.Range(0, 10);
+
+        if (randomValue < 1 && !isRotating)
         {
-            rotz += Time.deltaTime * rotationSpeed;
+            isRotating = true;
+            float rotationDuration = Random.Range(1f, 3f); // random duration for rotation
+            StartCoroutine(RotateForDuration(rotationDuration));
+        }
+    }
 
-            if (rotz > 180.0f)
-            {
-                rotz = 0.0f;
-                rotateX = false;
-            }
+    private IEnumerator RotateForDuration(float duration)
+    {
+        float elapsed = 0f;
+        float speed = Random.Range(1f, 30f); // random rotation speed
 
-            pictureObject.transform.rotation = Quaternion.Euler(90.0f, 0, rotz);
+        while (elapsed < duration)
+        {
+            float _RandomColorOpacity = Random.Range(60, 90) / 100f;
+            parentLight.intensity = Random.Range(0, 7f);
+            if (parentLight.intensity > 4f) { parentLight.intensity = Random.Range(0, 7f); }
+            SetOpacity(_RandomColorOpacity);
+
+            float angle = elapsed * speed;
+            transform.localRotation = Quaternion.Euler(0f, 0f, angle);
+
+            elapsed += Time.deltaTime;
+            yield return null;
         }
 
-        float _random = Random.Range(0f, 1000f);
+        SetOpacity(0f);
+        parentLight.intensity = Random.Range(0, 7f);
+        isRotating = false;
+    }
 
-        if (_random < 1)
-        {
-            rotateX = true;
-        }
+    private void SetOpacity(float opacity)
+    {
+        Color color = sprtRndr.color;
+        color.a = opacity;
+        sprtRndr.color = color;
     }
 }

@@ -199,6 +199,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 636960376}
     - target: {fileID: 7890733978420697665, guid: 35f180c7ac6134943ab22213768beb93, type: 3}
+      propertyPath: speed
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 7890733978420697665, guid: 35f180c7ac6134943ab22213768beb93, type: 3}
       propertyPath: offsetY
       value: 0
       objectReference: {fileID: 0}
@@ -259,7 +263,7 @@ MonoBehaviour:
   Star: {fileID: 6255107446420873703, guid: da450afd9fa61f24e8502d030689250e, type: 3}
   StarFolder: {fileID: 4201730766358554562}
   StarScaleMin: 0.02
-  StarScaleMax: 4
+  StarScaleMax: 2
   StarSystemPrefabs:
   - {fileID: 8806861733690095186, guid: 47832c21cf34d5e46baa1903f71b3e05, type: 3}
   - {fileID: 5424828078261472904, guid: df7eb0095455c7d43809dba28ad19743, type: 3}

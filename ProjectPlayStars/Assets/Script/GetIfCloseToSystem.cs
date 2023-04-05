@@ -24,6 +24,7 @@ public class GetIfCloseToSystem : MonoBehaviour
 			for (int i = 0; i < starGenerator.StarList.Count; i++)
 			{
 				starGenerator.StarList[i].GetComponent<Light2D>().color = Color.green;
+				starGenerator.StarList[i].GetComponentInChildren<SpriteRenderer>().color = Color.green;
 			}
 		} 
 		else if (Vector3.Distance(flashLight.transform.position, starSystemInScene.transform.position) > OutRangeDistance)
@@ -31,6 +32,7 @@ public class GetIfCloseToSystem : MonoBehaviour
 			for (int i = 0; i < starGenerator.StarList.Count; i++)
 			{
 				starGenerator.StarList[i].GetComponent<Light2D>().color = Color.red;
+				starGenerator.StarList[i].GetComponentInChildren<SpriteRenderer>().color = Color.red;
 			}
 		}
 		else
@@ -38,6 +40,7 @@ public class GetIfCloseToSystem : MonoBehaviour
 			for (int i = 0; i < starGenerator.StarList.Count; i++)
 			{
 				starGenerator.StarList[i].GetComponent<Light2D>().color = Color.white;
+				starGenerator.StarList[i].GetComponentInChildren<SpriteRenderer>().color = Color.white;
 			}
 		}
 	}
