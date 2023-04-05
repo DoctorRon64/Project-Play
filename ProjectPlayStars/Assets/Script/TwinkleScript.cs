@@ -32,6 +32,9 @@ public class TwinkleScript : MonoBehaviour
             isRotating = true;
             float rotationDuration = Random.Range(1f, 3f); // random duration for rotation
             StartCoroutine(RotateForDuration(rotationDuration));
+
+            parentLight.intensity = Random.Range(0, 7f);
+            if (parentLight.intensity > 4f) { parentLight.intensity = Random.Range(0, 7f); }
         }
     }
 
@@ -43,8 +46,7 @@ public class TwinkleScript : MonoBehaviour
         while (elapsed < duration)
         {
             float _RandomColorOpacity = Random.Range(60, 90) / 100f;
-            parentLight.intensity = Random.Range(0, 7f);
-            if (parentLight.intensity > 4f) { parentLight.intensity = Random.Range(0, 7f); }
+            
             SetOpacity(_RandomColorOpacity);
 
             float angle = elapsed * speed;

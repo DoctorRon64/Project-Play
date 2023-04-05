@@ -259,11 +259,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GridWidth: 120
   GridHeight: 55
-  StarAmount: 250
+  StarAmount: 500
   Star: {fileID: 6255107446420873703, guid: da450afd9fa61f24e8502d030689250e, type: 3}
   StarFolder: {fileID: 4201730766358554562}
   StarScaleMin: 0.02
-  StarScaleMax: 2
+  StarScaleMax: 1
   StarSystemPrefabs:
   - {fileID: 8806861733690095186, guid: 47832c21cf34d5e46baa1903f71b3e05, type: 3}
   - {fileID: 5424828078261472904, guid: df7eb0095455c7d43809dba28ad19743, type: 3}
