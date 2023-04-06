@@ -604,8 +604,24 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1301743271}
     - target: {fileID: 4417666523632165210, guid: c0b9a0525c074b24bac9c07ef1787161, type: 3}
+      propertyPath: returnSpeed
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 4417666523632165210, guid: c0b9a0525c074b24bac9c07ef1787161, type: 3}
+      propertyPath: moveBackSpeed
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 4417666523632165210, guid: c0b9a0525c074b24bac9c07ef1787161, type: 3}
       propertyPath: rotationOffset
       value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4417666523632165210, guid: c0b9a0525c074b24bac9c07ef1787161, type: 3}
+      propertyPath: smoothingFactor
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4417666523632165210, guid: c0b9a0525c074b24bac9c07ef1787161, type: 3}
+      propertyPath: StoppingDistance
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 4417666523632165210, guid: c0b9a0525c074b24bac9c07ef1787161, type: 3}
       propertyPath: maxRotationAngle
@@ -614,6 +630,10 @@ PrefabInstance:
     - target: {fileID: 4417666523632165210, guid: c0b9a0525c074b24bac9c07ef1787161, type: 3}
       propertyPath: minRotationAngle
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4417666523632165210, guid: c0b9a0525c074b24bac9c07ef1787161, type: 3}
+      propertyPath: stoppingDistance
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 5893615243102124017, guid: c0b9a0525c074b24bac9c07ef1787161, type: 3}
       propertyPath: m_RootOrder

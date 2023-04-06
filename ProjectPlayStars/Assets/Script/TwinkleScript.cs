@@ -25,7 +25,7 @@ public class TwinkleScript : MonoBehaviour
 
     private void Twinkle()
     {
-        int randomValue = Random.Range(0, 10);
+        int randomValue = Random.Range(0, 100);
 
         if (randomValue < 1 && !isRotating)
         {

@@ -20,14 +20,18 @@ public class HandMover : MonoBehaviour
 
 	void Update()
     {
+        FlickerActivate();
+        MouseFollow();
+    }
+
+    void MouseFollow()
+	{
         mouseX = Input.mousePosition.x;
         mouseY = Input.mousePosition.y;
 
         Vector3 mousePosition = cam.ScreenToWorldPoint(new Vector3(mouseX, mouseY, 10));
         Vector3 newPosition = new Vector3(mousePosition.x, mousePosition.y + offsetY, transform.position.z);
         transform.position = Vector3.Lerp(transform.position, newPosition, Time.deltaTime * speed);
-
-        FlickerActivate();
     }
 
     void FlickerActivate()
