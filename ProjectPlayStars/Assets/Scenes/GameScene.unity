@@ -612,6 +612,10 @@ PrefabInstance:
       value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 4417666523632165210, guid: c0b9a0525c074b24bac9c07ef1787161, type: 3}
+      propertyPath: followDistance
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4417666523632165210, guid: c0b9a0525c074b24bac9c07ef1787161, type: 3}
       propertyPath: rotationOffset
       value: -90
       objectReference: {fileID: 0}
