@@ -4,15 +4,11 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+	[SerializeField] private AudioSource audioSource;
+	[SerializeField] private List<AudioClip> audioClips;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+	private void Start()
+	{
+		
+	}
 }
