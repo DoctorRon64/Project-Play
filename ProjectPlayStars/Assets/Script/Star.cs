@@ -30,6 +30,12 @@ public class Star : MonoBehaviour
 	{
 		if (collision.CompareTag("Flash"))
 		{
+			int r = Random.Range(0, 100);
+			if (r < 7)
+			{
+				return;
+			}
+
 			StarObject.enabled = false;
             StarImageObject.enabled = false;
 
