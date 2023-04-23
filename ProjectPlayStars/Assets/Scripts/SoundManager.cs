@@ -28,10 +28,8 @@ public class SoundManager : MonoBehaviour
 	private void Update()
 	{
 		distanceConstallation = Vector2.Distance(Light.transform.position, Hand.transform.position);
-
-		soundVolume = 1 - (distanceConstallation / 150);
-		audioSource.volume = soundVolume;
-
+		DependVolume();
+		DependTime();
 		PlayRandomSound();
 	}
 
@@ -45,6 +43,21 @@ public class SoundManager : MonoBehaviour
 			audioSource.clip = audioClips[Random.Range(0, audioClips.Count)];
 			audioSource.Play();
 		}
+	}
+
+	private void DependTime()
+	{
+		MaxTimeTillSound = (int)distanceConstallation / 15;
+		if (MaxTimeTillSound < MinTimeTillSound)
+		{
+			MaxTimeTillSound = MinTimeTillSound;
+		}
+	}
+
+	private void DependVolume()
+	{
+		soundVolume = 1 - (distanceConstallation / 150);
+		audioSource.volume = soundVolume;
 	}
 
 }
