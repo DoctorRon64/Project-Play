@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class GameOver : MonoBehaviour
 {
@@ -11,13 +13,11 @@ public class GameOver : MonoBehaviour
 
 	public bool IsGameOver
 	{
-		get { return IsGameOver; }
 		set { if (value == true) { GameOverNow(); GameOverText.SetActive(true); } }
 	}
 
 	public bool IsGameWon
 	{
-		get { return IsGameWon; }
 		set { if (value == true) { GameOverNow(); GameWonText.SetActive(true); } }
 	}
 
