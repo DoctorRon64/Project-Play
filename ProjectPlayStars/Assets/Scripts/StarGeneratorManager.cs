@@ -5,84 +5,110 @@ using UnityEngine.Rendering.Universal;
 
 public class StarGeneratorManager : MonoBehaviour
 {
-	//settings
+    // Settings
     [SerializeField] private int GridWidth;
     [SerializeField] private int GridHeight;
     [SerializeField] private int StarAmount;
 
-	[SerializeField] private GameObject Star;
-	[SerializeField] private GameObject StarFolder;
+    [SerializeField] private GameObject Star;
+    [SerializeField] private GameObject StarFolder;
 
-	[SerializeField] private float StarScaleMin;
-	[SerializeField] private float StarScaleMax;
+    [SerializeField] private float StarScaleMin;
+    [SerializeField] private float StarScaleMax;
 
-	[SerializeField] private List<GameObject> Probes = new List<GameObject>();
-	[SerializeField] private int ProbeAmount;
+    [SerializeField] private List<GameObject> Probes = new List<GameObject>();
+    [SerializeField] private int ProbeAmount;
 
-	public List<GameObject> StarList = new List<GameObject>();
-	public List<GameObject> ProbesList = new List<GameObject>();
+    public List<GameObject> StarList = new List<GameObject>();
+    public List<GameObject> ProbesList = new List<GameObject>();
 
-	private void Awake()
-	{
-		GenerateGrid();
-	}
+    [SerializeField] private Collider2D spawnCollider; // Reference to the collider
 
-	[ContextMenu("Generate")]
-	private void GenerateGrid()
-	{
-		ClearStarsInGrid();
+    private void Awake()
+    {
+        GenerateGrid();
+    }
 
-		for (int i = 0; i < ProbeAmount; i++)
-		{
-			GenerateStarSystemInGrid(Probes[Random.Range(0, Probes.Count)]);
-		}
+    [ContextMenu("Generate")]
+    private void GenerateGrid()
+    {
+        ClearStarsInGrid();
 
-		for (int i = 0; i < StarAmount; i++)
-		{
-			GenerateStarInGrid(Star, StarList);
-		}
-	}
+        for (int i = 0; i < ProbeAmount; i++)
+        {
+            GenerateStarSystemInGrid(Probes[Random.Range(0, Probes.Count)]);
+        }
 
-	private void GenerateStarInGrid(GameObject _PrefabObj, List<GameObject> _list)
-	{
-		Vector2 _positon = new Vector2(Random.Range(-GridWidth, GridWidth), Random.Range(-GridHeight, GridHeight));
-		GameObject _InstantiateObject = Instantiate(_PrefabObj, _positon, Quaternion.identity, StarFolder.transform);
+        for (int i = 0; i < StarAmount; i++)
+        {
+            GenerateStarInGrid(Star, StarList);
+        }
+    }
 
-		float _randomScale = Random.Range(StarScaleMin, StarScaleMax);
+    private void GenerateStarInGrid(GameObject _PrefabObj, List<GameObject> _list)
+    {
+        Vector2 _positon = GetRandomPositionInCollider();
+        GameObject _InstantiateObject = Instantiate(_PrefabObj, _positon, Quaternion.identity, StarFolder.transform);
 
-		if (_randomScale >= (StarScaleMax / 2)) { _randomScale = Random.Range(StarScaleMin, StarScaleMax); }
-		_InstantiateObject.GetComponent<Light2D>().pointLightOuterRadius = _randomScale;
+        float _randomScale = Random.Range(StarScaleMin, StarScaleMax);
 
-		_InstantiateObject.GetComponentInChildren<SpriteRenderer>().transform.localScale = new Vector3(_randomScale / 25, _randomScale / 25, 0f);
-		_list.Add(_InstantiateObject);
-	}
+        if (_randomScale >= (StarScaleMax / 2)) { _randomScale = Random.Range(StarScaleMin, StarScaleMax); }
+        _InstantiateObject.GetComponent<Light2D>().pointLightOuterRadius = _randomScale;
 
-	private void GenerateStarSystemInGrid(GameObject _PrefabObj)
-	{
-		Vector2 _position = new Vector2(Random.Range(-GridWidth, GridWidth), Random.Range(-GridHeight, GridHeight));
-		GameObject ProbeAdded = Instantiate(_PrefabObj, _position, Quaternion.identity, StarFolder.transform);
-		ProbesList.Add(ProbeAdded);
-	}
+        _InstantiateObject.GetComponentInChildren<SpriteRenderer>().transform.localScale = new Vector3(_randomScale / 25, _randomScale / 25, 0f);
+        _list.Add(_InstantiateObject);
+    }
 
-	[ContextMenu("Clear")]
-	private void ClearStarsInGrid()
-	{
-		for(int i = 0; i < ProbesList.Count; i++)
-		{
-			DestroyImmediate(ProbesList[i]);
-		}
- 
-		for (int i = StarList.Count - 1; i >= 0; i--)
-		{ 
-			DestroyImmediate(StarList[i]);
-		}
+    private void GenerateStarSystemInGrid(GameObject _PrefabObj)
+    {
+        Vector2 _position = GetRandomPositionInCollider();
+        GameObject ProbeAdded = Instantiate(_PrefabObj, _position, Quaternion.identity, StarFolder.transform);
+        ProbesList.Add(ProbeAdded);
+    }
 
-		for (int i = 0; i < StarList.Count; i++)
-		{
-			Destroy(StarList[i]);
-		}
+    private Vector2 GetRandomPositionInCollider()
+    {
+        if (spawnCollider == null)
+        {
+            Debug.LogError("Spawn collider not assigned!");
+            return Vector2.zero;
+        }
 
-		ProbesList.Clear();
-		StarList.Clear();
-	}
+        Vector2 randomPoint;
+        int maxAttempts = 100; // Maximum attempts to prevent an infinite loop
+
+        for (int i = 0; i < maxAttempts; i++)
+        {
+            randomPoint = new Vector2(Random.Range(-GridWidth, GridWidth), Random.Range(-GridHeight, GridHeight));
+            if (spawnCollider.OverlapPoint(randomPoint))
+            {
+                return randomPoint;
+            }
+        }
+
+        Debug.LogWarning("Could not find a valid position inside the collider after " + maxAttempts + " attempts. Returning zero vector.");
+        return Vector2.zero;
+    }
+
+    [ContextMenu("Clear")]
+    private void ClearStarsInGrid()
+    {
+        for (int i = 0; i < ProbesList.Count; i++)
+        {
+            DestroyImmediate(ProbesList[i]);
+        }
+
+        for (int i = StarList.Count - 1; i >= 0; i--)
+        {
+            DestroyImmediate(StarList[i]);
+        }
+
+        for (int i = 0; i < StarList.Count; i++)
+        {
+            Destroy(StarList[i]);
+        }
+
+        ProbesList.Clear();
+        StarList.Clear();
+    }
 }
