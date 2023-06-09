@@ -70,7 +70,8 @@ public class TelescoopMover : MonoBehaviour
         Compass.GetComponent<Transform>().rotation *= Quaternion.Euler(0, 0, AngleCurrentAmount);
 
         float Anglertext = Telescoop.GetComponent<Transform>().rotation.z;
-        AngleText.text = Anglertext.ToString("F3") + "°";
+        Anglertext *= 360;
+        AngleText.text = Anglertext.ToString("F1") + "°";
         AngleAmount = Telescoop.GetComponent<Transform>().rotation.z;
         AngleAmount = Mathf.Round(AngleAmount * 100f) / 100f;
     }
