@@ -5,6 +5,7 @@ using UnityEngine;
 public class ObjectShooter : MonoBehaviour
 {
     [SerializeField] private List<GameObject> objectPrefabs = new List<GameObject>();
+    [SerializeField] private StarGeneratorManager st;
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private Transform Parent;
 
@@ -41,10 +42,12 @@ public class ObjectShooter : MonoBehaviour
     public void ThrowObject()
     {
         GameObject obj = Instantiate(objectPrefabs[Random.Range(0, objectPrefabs.Count)], spawnPoint.position, Quaternion.identity);
+        st.ProbesList.Add(obj);
         obj.AddComponent<Probes>();
         obj.GetComponent<Probes>().initialSpeed = GetSpeedBasedOnTimer();
         obj.GetComponent<Probes>().Parent = Parent;
     }
+
 
     private float GetSpeedBasedOnTimer()
     {

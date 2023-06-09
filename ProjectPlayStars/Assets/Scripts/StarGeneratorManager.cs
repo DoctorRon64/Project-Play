@@ -20,6 +20,7 @@ public class StarGeneratorManager : MonoBehaviour
     [SerializeField] private int ProbeAmount;
 
     public List<GameObject> StarList = new List<GameObject>();
+    public List<GameObject> RealProbesList = new List<GameObject>();
     public List<GameObject> ProbesList = new List<GameObject>();
 
     [SerializeField] private Collider2D spawnCollider; // Reference to the collider
@@ -63,10 +64,11 @@ public class StarGeneratorManager : MonoBehaviour
     {
         Vector2 _position = GetRandomPositionInCollider();
         GameObject ProbeAdded = Instantiate(_PrefabObj, _position, Quaternion.identity, StarFolder.transform);
+		RealProbesList.Add(ProbeAdded);
         ProbesList.Add(ProbeAdded);
-    }
+	}
 
-    private Vector2 GetRandomPositionInCollider()
+	private Vector2 GetRandomPositionInCollider()
     {
         if (spawnCollider == null)
         {
@@ -94,8 +96,13 @@ public class StarGeneratorManager : MonoBehaviour
     private void ClearStarsInGrid()
     {
         for (int i = 0; i < ProbesList.Count; i++)
-        {
+		{
             DestroyImmediate(ProbesList[i]);
+		}
+
+        for (int i = 0; i < RealProbesList.Count; i++)
+        {
+            DestroyImmediate(RealProbesList[i]);
         }
 
         for (int i = StarList.Count - 1; i >= 0; i--)
@@ -108,6 +115,7 @@ public class StarGeneratorManager : MonoBehaviour
             Destroy(StarList[i]);
         }
 
+        RealProbesList.Clear();
         ProbesList.Clear();
         StarList.Clear();
     }

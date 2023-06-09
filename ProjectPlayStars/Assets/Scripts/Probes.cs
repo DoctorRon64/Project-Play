@@ -10,6 +10,7 @@ public class Probes : MonoBehaviour
     public Transform Parent;
     public Vector2 direction = Vector2.up;
 
+    private GameObject ModelChild;
     private float elapsedTime = 0f;
     private Vector2 velocity;
     private bool isDead = false;
@@ -17,6 +18,7 @@ public class Probes : MonoBehaviour
     void Start()
     {
         transform.SetParent(Parent);
+        ModelChild = transform.GetChild(0).gameObject;
         velocity = initialSpeed * direction.normalized;
     }
 
@@ -34,7 +36,11 @@ public class Probes : MonoBehaviour
             {
                 isDead = true;
             }
+
+            if (ModelChild != null)
+            {
+                ModelChild.transform.Rotate(Vector3.forward, Random.Range(0f, 360f) * Time.deltaTime);
+            }
         }
     }
-
 }
