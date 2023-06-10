@@ -7,7 +7,9 @@ public class Probes : MonoBehaviour
     private float smoothness = 0.1f;
     public Transform Parent;
     private GameObject ModelChild;
+
     private bool isMoving;
+    private float movementTimer;
 
     void Start()
     {
@@ -26,6 +28,12 @@ public class Probes : MonoBehaviour
             newPosition.y = Mathf.Lerp(newPosition.y, landingPosition.y, smoothness * step);
             transform.position = newPosition;
 
+            movementTimer += Time.deltaTime;
+            if (movementTimer >= 1f)
+            {
+                isMoving = false;
+            }
+
             if (Mathf.Abs(transform.position.y - landingPosition.y) < 1f)
             {
                 isMoving = false;
@@ -37,6 +45,7 @@ public class Probes : MonoBehaviour
     {
         landingPosition = targetPosition;
         isMoving = true;
+        movementTimer = 0f;
         Debug.Log(targetPosition);
     }
 
