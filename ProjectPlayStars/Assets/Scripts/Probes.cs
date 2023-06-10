@@ -1,46 +1,47 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Probes : MonoBehaviour
 {
-    public float initialSpeed = 10f;
-    public float lifespan = 5f;
-    public float deceleration = 2f;
+    private Vector3 landingPosition;
+    private float speed;
+    private float smoothness = 0.1f;
     public Transform Parent;
-    public Vector2 direction = Vector2.up;
-
     private GameObject ModelChild;
-    private float elapsedTime = 0f;
-    private Vector2 velocity;
-    private bool isDead = false;
+    private bool isMoving;
 
     void Start()
     {
         transform.SetParent(Parent);
         ModelChild = transform.GetChild(0).gameObject;
-        velocity = initialSpeed * direction.normalized;
     }
 
     void Update()
     {
-        if (!isDead)
+        if (isMoving)
         {
-            transform.Translate(velocity * Time.deltaTime);
+            ModelChild.transform.Rotate(Vector3.forward, Random.Range(0f, 360f) * Time.deltaTime);
 
-            velocity -= velocity.normalized * deceleration * Time.deltaTime;
+            float step = speed * Time.deltaTime;
+            Vector3 newPosition = transform.position;
+            newPosition.y = Mathf.Lerp(newPosition.y, landingPosition.y, smoothness * step);
+            transform.position = newPosition;
 
-            elapsedTime += Time.deltaTime;
-
-            if (elapsedTime >= lifespan)
+            if (Mathf.Abs(transform.position.y - landingPosition.y) < 1f)
             {
-                isDead = true;
-            }
-
-            if (ModelChild != null)
-            {
-                ModelChild.transform.Rotate(Vector3.forward, Random.Range(0f, 360f) * Time.deltaTime);
+                isMoving = false;
             }
         }
+    }
+
+    public void SetTargetPosition(Vector3 targetPosition)
+    {
+        landingPosition = targetPosition;
+        isMoving = true;
+        Debug.Log(targetPosition);
+    }
+
+    public void setSpeed(float _speed)
+    {
+        speed = _speed;
     }
 }

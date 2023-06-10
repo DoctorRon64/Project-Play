@@ -8,50 +8,56 @@ public class ObjectShooter : MonoBehaviour
     [SerializeField] private StarGeneratorManager st;
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private Transform Parent;
+    [SerializeField] private GameObject infiniteLooper;
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private Sprite RImage;
+    [SerializeField] private Sprite GImage;
+    [SerializeField] private float speed = 20f;
 
-    private float timer = 0f;
-    private bool isIncreasing = true;
-    [SerializeField] private float minSpeed = 5f;
-    [SerializeField] private float maxSpeed = 20f;
+    private bool canShoot = true;
+    private Vector3 landingPosition;
+
+	private void Awake()
+	{
+        spriteRenderer.sprite = RImage;
+    }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (canShoot && Input.GetKeyDown(KeyCode.Space))
         {
             ThrowObject();
-        }
-
-        UpdateTimer();
-    }
-
-    private void UpdateTimer()
-    {
-        float speedRange = maxSpeed - minSpeed;
-        float timerDirection = isIncreasing ? 1f : -1f;
-
-        timer += timerDirection * Time.deltaTime;
-
-        if (timer <= 0f || timer >= 1f)
-        {
-            isIncreasing = !isIncreasing;
         }
     }
 
     public void ThrowObject()
     {
         GameObject obj = Instantiate(objectPrefabs[Random.Range(0, objectPrefabs.Count)], spawnPoint.position, Quaternion.identity);
+
         st.ProbesList.Add(obj);
         obj.AddComponent<Probes>();
-        obj.GetComponent<Probes>().initialSpeed = GetSpeedBasedOnTimer();
-        obj.GetComponent<Probes>().lifespan = GetSpeedBasedOnTimer() / 2;
+
+        landingPosition.x = obj.transform.position.x;
+        landingPosition.y = infiniteLooper.transform.position.y;
+        Debug.Log(infiniteLooper.transform.position.y );
+        Debug.Log(landingPosition.y );
+        obj.GetComponent<Probes>().SetTargetPosition(landingPosition);
+        obj.GetComponent<Probes>().setSpeed(speed);
+
         obj.GetComponent<Probes>().Parent = Parent;
+
+        canShoot = false;
+        spriteRenderer.sprite = GImage;
     }
 
-
-    private float GetSpeedBasedOnTimer()
+    public void EnableShooting()
     {
-        float speedRange = maxSpeed - minSpeed;
-        float currentSpeed = minSpeed + timer * speedRange;
-        return currentSpeed;
+        canShoot = true;
+        spriteRenderer.sprite = RImage;
+    }
+
+    public Vector3 GetLandingPosition()
+    {
+        return landingPosition;
     }
 }
