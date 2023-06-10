@@ -28,7 +28,7 @@ public class TwinkleProbeScript : MonoBehaviour
             float rotationDuration = Random.Range(1f, 3f); // random duration for rotation
             StartCoroutine(RotateForDuration(rotationDuration));
 
-            parentLight.intensity = Random.Range(0, 7f);
+            parentLight.intensity = Random.Range(5, 10f);
             if (parentLight.intensity > 4f) { parentLight.intensity = Random.Range(5, 7f); }
         }
     }
@@ -43,6 +43,6 @@ public class TwinkleProbeScript : MonoBehaviour
             yield return null;
         }
 
-        parentLight.intensity = Random.Range(2, 7f);
+        parentLight.intensity = Random.Range(5, 10f);
     }
 }

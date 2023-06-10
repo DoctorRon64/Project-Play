@@ -23,7 +23,8 @@ public class StarGeneratorManager : MonoBehaviour
     public List<GameObject> RealProbesList = new List<GameObject>();
     public List<GameObject> ProbesList = new List<GameObject>();
 
-    [SerializeField] private Collider2D spawnCollider; // Reference to the collider
+    [SerializeField] private Collider2D spawnCollider;
+    [SerializeField] private Collider2D spawnProbeCollider;
 
     private void Awake()
     {
@@ -48,7 +49,7 @@ public class StarGeneratorManager : MonoBehaviour
 
     private void GenerateStarInGrid(GameObject _PrefabObj, List<GameObject> _list)
     {
-        Vector2 _positon = GetRandomPositionInCollider();
+        Vector2 _positon = GetRandomPositionInCollider(spawnCollider);
         GameObject _InstantiateObject = Instantiate(_PrefabObj, _positon, Quaternion.identity, StarFolder.transform);
 
         float _randomScale = Random.Range(StarScaleMin, StarScaleMax);
@@ -62,13 +63,13 @@ public class StarGeneratorManager : MonoBehaviour
 
     private void GenerateStarSystemInGrid(GameObject _PrefabObj)
     {
-        Vector2 _position = GetRandomPositionInCollider();
+        Vector2 _position = GetRandomPositionInCollider(spawnProbeCollider);
         GameObject ProbeAdded = Instantiate(_PrefabObj, _position, Quaternion.identity, StarFolder.transform);
 		RealProbesList.Add(ProbeAdded);
         ProbesList.Add(ProbeAdded);
 	}
 
-	private Vector2 GetRandomPositionInCollider()
+	private Vector2 GetRandomPositionInCollider(Collider2D _collider2D)
     {
         if (spawnCollider == null)
         {
@@ -82,7 +83,7 @@ public class StarGeneratorManager : MonoBehaviour
         for (int i = 0; i < maxAttempts; i++)
         {
             randomPoint = new Vector2(Random.Range(-GridWidth, GridWidth), Random.Range(-GridHeight, GridHeight));
-            if (spawnCollider.OverlapPoint(randomPoint))
+            if (_collider2D.OverlapPoint(randomPoint))
             {
                 return randomPoint;
             }

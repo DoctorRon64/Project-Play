@@ -35,8 +35,6 @@ public class ObjectShooter : MonoBehaviour
         {
             isIncreasing = !isIncreasing;
         }
-
-        float currentSpeed = minSpeed + timer * speedRange;
     }
 
     public void ThrowObject()
@@ -45,6 +43,7 @@ public class ObjectShooter : MonoBehaviour
         st.ProbesList.Add(obj);
         obj.AddComponent<Probes>();
         obj.GetComponent<Probes>().initialSpeed = GetSpeedBasedOnTimer();
+        obj.GetComponent<Probes>().lifespan = GetSpeedBasedOnTimer() / 2;
         obj.GetComponent<Probes>().Parent = Parent;
     }
 
