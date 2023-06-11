@@ -4,32 +4,44 @@ using UnityEngine;
 
 public class MiniMapMaker : MonoBehaviour
 {
-    [SerializeField] private StarGeneratorManager starmgr;
-    [SerializeField] private GameObject ParentTransform;
-    private List<GameObject> RealProbes = new List<GameObject>();
+    [SerializeField] private StarGeneratorData generatorData;
+    [SerializeField] private GameObject parentTransform;
     [SerializeField] private Vector3 offsetScale = new Vector3(0.5f, 0.5f, 0);
     [SerializeField] private Vector3 offsetPosition = new Vector3(0.5f, 0.5f, 0);
-    [SerializeField] private LayerMask hitLayer;
+    [SerializeField] private Vector3 pivotOffset = Vector3.zero;
+
+    private List<GameObject> realProbes = new List<GameObject>();
 
     private void Start()
     {
-        for (int i = 0; i < starmgr.RealProbesList.Count; i++)
-        {
-            GameObject instant = Instantiate(starmgr.RealProbesList[i]);
+        GenerateProbes();
+    }
 
-            instant.layer = 6;
-            instant.transform.parent = ParentTransform.transform;
-            instant.GetComponent<BoxCollider2D>().size = new Vector2(20, 20);
-            RealProbes.Add(instant);
+    private void GenerateProbes()
+    {
+        foreach (GameObject probePrefab in generatorData.RealProbesList)
+        {
+            GameObject instantiatedProbe = Instantiate(probePrefab, parentTransform.transform);
+            instantiatedProbe.layer = 6;
+            instantiatedProbe.GetComponent<BoxCollider2D>().size = new Vector2(20, 20);
+            instantiatedProbe.transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = false;
+            realProbes.Add(instantiatedProbe);
         }
     }
 
     private void Update()
     {
-        ParentTransform.transform.localScale = offsetScale;
-        ParentTransform.transform.localPosition = offsetPosition;
+        UpdateTransform();
     }
 
+    private void UpdateTransform()
+    {
+        parentTransform.transform.localScale = offsetScale;
+        parentTransform.transform.localPosition = offsetPosition;
 
+        foreach (GameObject probe in realProbes)
+        {
+            probe.transform.localPosition += pivotOffset;
+        }
+    }
 }
-

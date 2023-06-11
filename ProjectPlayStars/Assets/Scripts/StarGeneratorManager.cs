@@ -19,9 +19,7 @@ public class StarGeneratorManager : MonoBehaviour
     [SerializeField] private List<GameObject> Probes = new List<GameObject>();
     [SerializeField] private int ProbeAmount;
 
-    public List<GameObject> StarList = new List<GameObject>();
-    public List<GameObject> RealProbesList = new List<GameObject>();
-    public List<GameObject> ProbesList = new List<GameObject>();
+    public StarGeneratorData generatorData; // Reference to the ScriptableObject
 
     [SerializeField] private Collider2D spawnCollider;
     [SerializeField] private Collider2D spawnProbeCollider;
@@ -43,7 +41,7 @@ public class StarGeneratorManager : MonoBehaviour
 
         for (int i = 0; i < StarAmount; i++)
         {
-            GenerateStarInGrid(Star, StarList);
+            GenerateStarInGrid(Star, generatorData.StarList);
         }
     }
 
@@ -65,11 +63,12 @@ public class StarGeneratorManager : MonoBehaviour
     {
         Vector2 _position = GetRandomPositionInCollider(spawnProbeCollider);
         GameObject ProbeAdded = Instantiate(_PrefabObj, _position, Quaternion.identity, StarFolder.transform);
-		RealProbesList.Add(ProbeAdded);
-        ProbesList.Add(ProbeAdded);
-	}
+        ProbeAdded.tag = "RealProbe";
+        generatorData.RealProbesList.Add(ProbeAdded);
+        generatorData.ProbesList.Add(ProbeAdded);
+    }
 
-	private Vector2 GetRandomPositionInCollider(Collider2D _collider2D)
+    private Vector2 GetRandomPositionInCollider(Collider2D _collider2D)
     {
         if (spawnCollider == null)
         {
@@ -78,8 +77,7 @@ public class StarGeneratorManager : MonoBehaviour
         }
 
         Vector2 randomPoint;
-        int maxAttempts = 100; // Maximum attempts to prevent an infinite loop
-
+        int maxAttempts = 100;
         for (int i = 0; i < maxAttempts; i++)
         {
             randomPoint = new Vector2(Random.Range(-GridWidth, GridWidth), Random.Range(-GridHeight, GridHeight));
@@ -96,28 +94,28 @@ public class StarGeneratorManager : MonoBehaviour
     [ContextMenu("Clear")]
     private void ClearStarsInGrid()
     {
-        for (int i = 0; i < ProbesList.Count; i++)
-		{
-            DestroyImmediate(ProbesList[i]);
-		}
-
-        for (int i = 0; i < RealProbesList.Count; i++)
+        for (int i = 0; i < generatorData.ProbesList.Count; i++)
         {
-            DestroyImmediate(RealProbesList[i]);
+            DestroyImmediate(generatorData.ProbesList[i]);
         }
 
-        for (int i = StarList.Count - 1; i >= 0; i--)
+        for (int i = 0; i < generatorData.RealProbesList.Count; i++)
         {
-            DestroyImmediate(StarList[i]);
+            DestroyImmediate(generatorData.RealProbesList[i]);
         }
 
-        for (int i = 0; i < StarList.Count; i++)
+        for (int i = generatorData.StarList.Count - 1; i >= 0; i--)
         {
-            Destroy(StarList[i]);
+            DestroyImmediate(generatorData.StarList[i]);
         }
 
-        RealProbesList.Clear();
-        ProbesList.Clear();
-        StarList.Clear();
+        for (int i = 0; i < generatorData.StarList.Count; i++)
+        {
+            Destroy(generatorData.StarList[i]);
+        }
+
+        generatorData.RealProbesList.Clear();
+        generatorData.ProbesList.Clear();
+        generatorData.StarList.Clear();
     }
 }

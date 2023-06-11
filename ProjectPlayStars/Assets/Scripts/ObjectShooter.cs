@@ -5,7 +5,7 @@ using UnityEngine;
 public class ObjectShooter : MonoBehaviour
 {
     [SerializeField] private List<GameObject> objectPrefabs = new List<GameObject>();
-    [SerializeField] private StarGeneratorManager st;
+    [SerializeField] private StarGeneratorData generatorData;
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private Transform Parent;
     [SerializeField] private GameObject infiniteLooper;
@@ -34,17 +34,15 @@ public class ObjectShooter : MonoBehaviour
     {
         GameObject obj = Instantiate(objectPrefabs[Random.Range(0, objectPrefabs.Count)], spawnPoint.position, Quaternion.identity);
 
-        st.ProbesList.Add(obj);
+        generatorData.ProbesList.Add(obj);
         obj.AddComponent<Probes>();
 
         landingPosition.x = obj.transform.position.x;
         landingPosition.y = infiniteLooper.transform.position.y;
-        Debug.Log(infiniteLooper.transform.position.y );
-        Debug.Log(landingPosition.y );
         obj.GetComponent<Probes>().SetTargetPosition(landingPosition);
         obj.GetComponent<Probes>().setSpeed(speed);
-
         obj.GetComponent<Probes>().Parent = Parent;
+        obj.GetComponent<Probes>().starData = generatorData;
 
         canShoot = false;
         spriteRenderer.sprite = GImage;
