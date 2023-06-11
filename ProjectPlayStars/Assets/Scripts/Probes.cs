@@ -8,15 +8,22 @@ public class Probes : MonoBehaviour
     public Transform Parent;
     private GameObject ModelChild;
     public StarGeneratorData starData;
+    public WinManager wnMgr;
 
     private bool isMoving;
     private float movementTimer;
+    private bool activateOnce = true;
+
+    private Vector3 initialScale;
+    public float otherscale = 0.5f;
 
     void Start()
     {
         transform.SetParent(Parent);
         ModelChild = transform.GetChild(0).gameObject;
         gameObject.tag = "Probes";
+
+        initialScale = transform.localScale;
     }
 
     void Update()
@@ -34,14 +41,23 @@ public class Probes : MonoBehaviour
             if (movementTimer >= 1f)
             {
                 isMoving = false;
-                checkIfCollidingWithRealProbe();
+                wnMgr.Feedback(0);
             }
 
             if (Mathf.Abs(transform.position.y - landingPosition.y) < 1f)
             {
                 isMoving = false;
-                checkIfCollidingWithRealProbe();
+                wnMgr.Feedback(0);
             }
+
+            float scalingFactor = 1f;
+            if (transform.position.y >= 0f)
+            {
+                scalingFactor = 1f - (transform.position.y - Parent.position.y) / (landingPosition.y - Parent.position.y) * otherscale;
+                scalingFactor = Mathf.Clamp01(scalingFactor);
+            }
+
+            transform.localScale = initialScale * scalingFactor;
         }
     }
 
@@ -50,7 +66,6 @@ public class Probes : MonoBehaviour
         landingPosition = targetPosition;
         isMoving = true;
         movementTimer = 0f;
-        Debug.Log(targetPosition);
     }
 
     public void setSpeed(float _speed)
@@ -58,18 +73,16 @@ public class Probes : MonoBehaviour
         speed = _speed;
     }
 
-    private void checkIfCollidingWithRealProbe()
+    public void OnTriggerStay2D(Collider2D collision)
     {
-        for (int i = 0; i < starData.RealProbesList.Count; i++)
+        if (collision.CompareTag("RealProbes") && !isMoving && activateOnce)
         {
-            GameObject realProbe = starData.RealProbesList[i];
-            if (realProbe.CompareTag("RealProbe") && gameObject.CompareTag("Probes") && realProbe.GetComponent<Collider2D>().bounds.Intersects(GetComponent<Collider>().bounds))
-            {
-                Debug.Log("Colliding with Real Probe: " + realProbe.name);
-            } else
-			{
-                Debug.Log(" NOt collided");
-			}
+            GameObject collidedProbe = collision.gameObject;
+            wnMgr.MiniMapUpdate(collidedProbe);
+            collidedProbe.GetComponent<RealProbes>().Captured = true;
+            wnMgr.CheckIfWon();
+            wnMgr.Feedback(1);
+            activateOnce = false;
         }
     }
 }

@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1797884045141841982}
   - component: {fileID: 3997168010255487878}
+  - component: {fileID: -7918410476048574371}
   m_Layer: 0
   m_Name: Probe B
-  m_TagString: Untagged
+  m_TagString: RealProbes
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -26,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 7747774137883149564}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 7.11, y: 4.34, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6517407834461875566}
@@ -46,7 +47,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.17489398, y: -0.029149532}
+  m_Offset: {x: -0.2660079, y: -0.04719317}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -57,8 +58,29 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 5.908353, y: 6.097584}
+  m_Size: {x: 2.4102802, y: 2.6942475}
   m_EdgeRadius: 0
+--- !u!50 &-7918410476048574371
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7747774137883149564}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &8549035041394430494
 GameObject:
   m_ObjectHideFlags: 0
@@ -85,7 +107,7 @@ Transform:
   m_GameObject: {fileID: 8549035041394430494}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.14, y: -0.03, z: 0}
-  m_LocalScale: {x: 0.041594114, y: 0.041594114, z: 0.041594114}
+  m_LocalScale: {x: 0.043714937, y: 0.043714937, z: 0.043714937}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8189770187776767325}
@@ -157,11 +179,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 646944884938299157, guid: 5c1b9f0ed557fc946bdfe82f70484aa9, type: 3}
       propertyPath: m_Color.g
-      value: 0
+      value: 0.120423555
       objectReference: {fileID: 0}
     - target: {fileID: 646944884938299157, guid: 5c1b9f0ed557fc946bdfe82f70484aa9, type: 3}
       propertyPath: m_Color.r
-      value: 0.00126791
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1932365339177360270, guid: 5c1b9f0ed557fc946bdfe82f70484aa9, type: 3}
       propertyPath: m_Name
@@ -173,27 +195,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5431592629598260886, guid: 5c1b9f0ed557fc946bdfe82f70484aa9, type: 3}
       propertyPath: m_LocalScale.x
-      value: 8.549738
+      value: 8.134949
       objectReference: {fileID: 0}
     - target: {fileID: 5431592629598260886, guid: 5c1b9f0ed557fc946bdfe82f70484aa9, type: 3}
       propertyPath: m_LocalScale.y
-      value: 8.549738
+      value: 8.134949
       objectReference: {fileID: 0}
     - target: {fileID: 5431592629598260886, guid: 5c1b9f0ed557fc946bdfe82f70484aa9, type: 3}
       propertyPath: m_LocalScale.z
-      value: 8.549738
+      value: 8.134949
       objectReference: {fileID: 0}
     - target: {fileID: 5431592629598260886, guid: 5c1b9f0ed557fc946bdfe82f70484aa9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -25.724789
+      value: -22.3
       objectReference: {fileID: 0}
     - target: {fileID: 5431592629598260886, guid: 5c1b9f0ed557fc946bdfe82f70484aa9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.2020912
+      value: 1.1
       objectReference: {fileID: 0}
     - target: {fileID: 5431592629598260886, guid: 5c1b9f0ed557fc946bdfe82f70484aa9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.3085842
+      value: -0.29361328
       objectReference: {fileID: 0}
     - target: {fileID: 5431592629598260886, guid: 5c1b9f0ed557fc946bdfe82f70484aa9, type: 3}
       propertyPath: m_LocalRotation.w

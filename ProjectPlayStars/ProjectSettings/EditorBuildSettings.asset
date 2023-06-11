@@ -5,10 +5,16 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/Renderer/Scenes/Menu.unity
-    guid: 58b8d3eabda80f94aa36f68cf575bd75
+    path: Assets/Renderer/Scenes/Video.unity
+    guid: e508ecdfc5011814eb3a17ed25ec5732
   - enabled: 1
-    path: Assets/Renderer/Scenes/GameScene.unity
-    guid: 7a16861a42911fd4eabccec63e2482f8
+    path: Assets/Renderer/Scenes/SpaceShip.unity
+    guid: b4a0f952eb2dba84cab5426002dcff27
   m_configObjects: {}

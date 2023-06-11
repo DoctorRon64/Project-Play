@@ -10,6 +10,7 @@ public class ObjectShooter : MonoBehaviour
     [SerializeField] private Transform Parent;
     [SerializeField] private GameObject infiniteLooper;
     [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private WinManager wnMgr;
     [SerializeField] private Sprite RImage;
     [SerializeField] private Sprite GImage;
     [SerializeField] private float speed = 20f;
@@ -42,6 +43,7 @@ public class ObjectShooter : MonoBehaviour
         obj.GetComponent<Probes>().SetTargetPosition(landingPosition);
         obj.GetComponent<Probes>().setSpeed(speed);
         obj.GetComponent<Probes>().Parent = Parent;
+        obj.GetComponent<Probes>().wnMgr = wnMgr;
         obj.GetComponent<Probes>().starData = generatorData;
 
         canShoot = false;

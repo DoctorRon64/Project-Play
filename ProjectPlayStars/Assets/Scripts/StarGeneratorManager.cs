@@ -63,7 +63,9 @@ public class StarGeneratorManager : MonoBehaviour
     {
         Vector2 _position = GetRandomPositionInCollider(spawnProbeCollider);
         GameObject ProbeAdded = Instantiate(_PrefabObj, _position, Quaternion.identity, StarFolder.transform);
-        ProbeAdded.tag = "RealProbe";
+        ProbeAdded.tag = "RealProbes";
+        ProbeAdded.AddComponent<RealProbes>();
+        ProbeAdded.GetComponentInChildren<SpriteRenderer>().enabled = false;
         generatorData.RealProbesList.Add(ProbeAdded);
         generatorData.ProbesList.Add(ProbeAdded);
     }

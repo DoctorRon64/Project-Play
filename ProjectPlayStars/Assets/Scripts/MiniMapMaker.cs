@@ -10,7 +10,7 @@ public class MiniMapMaker : MonoBehaviour
     [SerializeField] private Vector3 offsetPosition = new Vector3(0.5f, 0.5f, 0);
     [SerializeField] private Vector3 pivotOffset = Vector3.zero;
 
-    private List<GameObject> realProbes = new List<GameObject>();
+    public List<GameObject> realProbes = new List<GameObject>();
 
     private void Start()
     {
@@ -25,6 +25,8 @@ public class MiniMapMaker : MonoBehaviour
             instantiatedProbe.layer = 6;
             instantiatedProbe.GetComponent<BoxCollider2D>().size = new Vector2(20, 20);
             instantiatedProbe.transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = false;
+            instantiatedProbe.tag = "Untagged";
+            Destroy(instantiatedProbe.GetComponent<RealProbes>());
             realProbes.Add(instantiatedProbe);
         }
     }
