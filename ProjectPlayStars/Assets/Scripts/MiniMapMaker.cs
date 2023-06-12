@@ -27,6 +27,7 @@ public class MiniMapMaker : MonoBehaviour
             instantiatedProbe.transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = false;
             instantiatedProbe.tag = "Untagged";
             Destroy(instantiatedProbe.GetComponent<RealProbes>());
+            Destroy(instantiatedProbe.GetComponentInChildren<TwinkleProbeScript>());
             realProbes.Add(instantiatedProbe);
         }
     }
