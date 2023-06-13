@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class WinManager : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class WinManager : MonoBehaviour
 	[SerializeField] private GameObject feedbackImage;
 	[SerializeField] private SpriteRenderer feedbackRndr;
 	[SerializeField] private MiniMapMaker MiMaMa;
+    [SerializeField] private AudioSource auditS;
     [SerializeField] private List<Sprite> sprites = new List<Sprite>();
 
 	private void Start()
@@ -19,6 +21,7 @@ public class WinManager : MonoBehaviour
 
 	public void CheckIfWon()
     {
+        auditS.Play();
         int counter = 0;
 
         foreach (GameObject realProbe in strData.RealProbesList)
@@ -60,7 +63,6 @@ public class WinManager : MonoBehaviour
     private void Won()
     {
         Debug.Log("game won");
+        SceneManager.LoadScene("Win");
     }
-
-    
 }
