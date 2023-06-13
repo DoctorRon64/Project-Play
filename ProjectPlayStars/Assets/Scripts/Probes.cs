@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Probes : MonoBehaviour
@@ -9,6 +10,7 @@ public class Probes : MonoBehaviour
     private GameObject ModelChild;
     public StarGeneratorData starData;
     public WinManager wnMgr;
+    private ParticleSystem prtsystm;
 
     private bool isMoving;
     private float movementTimer;
@@ -24,6 +26,7 @@ public class Probes : MonoBehaviour
         gameObject.tag = "Probes";
 
         initialScale = transform.localScale;
+        prtsystm = GetComponentInChildren<ParticleSystem>();
     }
 
     void Update()
@@ -42,12 +45,14 @@ public class Probes : MonoBehaviour
             {
                 isMoving = false;
                 wnMgr.Feedback(0);
+                StartCoroutine(checkIfnotHitanyCOllider());
             }
 
             if (Mathf.Abs(transform.position.y - landingPosition.y) < 1f)
             {
                 isMoving = false;
                 wnMgr.Feedback(0);
+                StartCoroutine(checkIfnotHitanyCOllider());
             }
 
             float scalingFactor = 1f;
@@ -84,5 +89,21 @@ public class Probes : MonoBehaviour
             wnMgr.Feedback(1);
             activateOnce = false;
         }
+    }
+
+    IEnumerator checkIfnotHitanyCOllider()
+	{
+        yield return new WaitForSeconds(0.5f);
+        if (activateOnce == true)
+		{
+            StartCoroutine(timeBeforeDeath());
+		} 
+	}
+
+    IEnumerator timeBeforeDeath()
+    {
+        prtsystm.Play();
+        yield return new WaitForSeconds(0.5f);
+        Destroy(gameObject);
     }
 }
