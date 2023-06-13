@@ -11,6 +11,8 @@ public class Probes : MonoBehaviour
     public StarGeneratorData starData;
     public WinManager wnMgr;
     private ParticleSystem prtsystm;
+    private ParticleSystem prtsystm2;
+    public AudioSource auditL;
 
     private bool isMoving;
     private float movementTimer;
@@ -26,7 +28,8 @@ public class Probes : MonoBehaviour
         gameObject.tag = "Probes";
 
         initialScale = transform.localScale;
-        prtsystm = GetComponentInChildren<ParticleSystem>();
+        prtsystm = gameObject.transform.GetChild(1).GetComponent<ParticleSystem>();
+        prtsystm2 = gameObject.transform.GetChild(2).GetComponent<ParticleSystem>();
     }
 
     void Update()
@@ -87,13 +90,15 @@ public class Probes : MonoBehaviour
             collidedProbe.GetComponent<RealProbes>().Captured = true;
             wnMgr.CheckIfWon();
             wnMgr.Feedback(1);
+            prtsystm2.Play();
             activateOnce = false;
         }
     }
 
     IEnumerator checkIfnotHitanyCOllider()
 	{
-        yield return new WaitForSeconds(0.5f);
+
+        yield return new WaitForSeconds(0.7f);
         if (activateOnce == true)
 		{
             StartCoroutine(timeBeforeDeath());
@@ -102,6 +107,7 @@ public class Probes : MonoBehaviour
 
     IEnumerator timeBeforeDeath()
     {
+        auditL.Play();
         prtsystm.Play();
         yield return new WaitForSeconds(0.5f);
         Destroy(gameObject);

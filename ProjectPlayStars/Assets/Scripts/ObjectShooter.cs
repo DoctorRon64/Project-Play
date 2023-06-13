@@ -13,6 +13,7 @@ public class ObjectShooter : MonoBehaviour
     [SerializeField] private WinManager wnMgr;
     [SerializeField] private Sprite RImage;
     [SerializeField] private Sprite GImage;
+    [SerializeField] private AudioSource auditL;
     [SerializeField] private float speed = 20f;
 
     private bool canShoot = true;
@@ -44,6 +45,7 @@ public class ObjectShooter : MonoBehaviour
         obj.GetComponent<Probes>().setSpeed(speed);
         obj.GetComponent<Probes>().Parent = Parent;
         obj.GetComponent<Probes>().wnMgr = wnMgr;
+        obj.GetComponent<Probes>().auditL = auditL;
         obj.GetComponent<Probes>().starData = generatorData;
 
         canShoot = false;

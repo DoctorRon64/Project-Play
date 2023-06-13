@@ -63,6 +63,12 @@ public class WinManager : MonoBehaviour
     private void Won()
     {
         Debug.Log("game won");
+        StartCoroutine(waitabit());
+    }
+
+    IEnumerator waitabit()
+	{
+        yield return new WaitForSeconds(2);
         SceneManager.LoadScene("Win");
     }
 }
