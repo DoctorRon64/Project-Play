@@ -108,6 +108,7 @@ public class Probes : MonoBehaviour
     IEnumerator timeBeforeDeath()
     {
         auditL.Play();
+        prtsystm.transform.localScale = new Vector2(0.5f, 0.5f);
         prtsystm.Play();
         yield return new WaitForSeconds(0.5f);
         Destroy(gameObject);
