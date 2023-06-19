@@ -6,15 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Renderer/Scenes/Tutorial.unity
-    guid: e508ecdfc5011814eb3a17ed25ec5732
+    path: Assets/Renderer/Scenes/Menu.unity
+    guid: 58b8d3eabda80f94aa36f68cf575bd75
   - enabled: 1
-    path: Assets/Renderer/Scenes/SpaceShip.unity
-    guid: b4a0f952eb2dba84cab5426002dcff27
-  - enabled: 1
-    path: Assets/Renderer/Scenes/Win.unity
-    guid: e1dc925544fd6fa4e96b57485014b7b4
-  - enabled: 1
-    path: Assets/Renderer/Scenes/GameOver.unity
-    guid: 02fe2bacb86b4c14e8a665e3baa37a66
+    path: Assets/Renderer/Scenes/GameScene.unity
+    guid: 7a16861a42911fd4eabccec63e2482f8
   m_configObjects: {}
